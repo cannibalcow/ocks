@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  show: boolean = false;
+
+  toggleCollapse() {
+    this.show = !this.show;
+  }
+
 }
