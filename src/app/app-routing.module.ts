@@ -13,7 +13,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [AuthGuard]
-  }
+  },
   {
     path: 'error',
     component: ErrorComponent

@@ -29,21 +29,6 @@ export class AuthService {
       })
       .catch(error => {
         console.log('error', error);
-      }
-    // return new Promise<any>((resolve, reject) => {
-    //   const provider = new firebase.auth.GoogleAuthProvider();
-
-    //   provider.addScope('profile')
-    //   provider.addScope('email');
-
-    //   this.afAuth.auth
-    //     .signInWithPopup(provider)
-    //     .then(res => {
-    //       const authInfo = new AuthInfo(this.afAuth.auth.currentUser.uid);
-    //       this.authInfo$.next(authInfo);
-    //       subject
-    //       resolve(res);
-    //     })
-    // });
+      })
   }
 }

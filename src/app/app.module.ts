@@ -15,6 +15,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
+import { StoreModule } from '../../node_modules/@ngrx/store';
+import * as reducer from './store/kill.reducer';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { ErrorComponent } from './components/error/error.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    StoreModule.forRoot(reducer)
   ],
   providers: [],
   bootstrap: [AppComponent]
