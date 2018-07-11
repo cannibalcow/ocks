@@ -9,6 +9,13 @@ import { KillingFeedComponent } from './components/killing-feed/killing-feed.com
 import { KillingStatsComponent } from './components/killing-stats/killing-stats.component';
 import { CatDescriptionComponent } from './components/cat-description/cat-description.component';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+import { LoginComponent } from './components/login/login.component';
+import { ErrorComponent } from './components/error/error.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,11 +23,16 @@ import { CatDescriptionComponent } from './components/cat-description/cat-descri
     CatAvatarComponent,
     KillingFeedComponent,
     KillingStatsComponent,
-    CatDescriptionComponent
+    CatDescriptionComponent,
+    LoginComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
