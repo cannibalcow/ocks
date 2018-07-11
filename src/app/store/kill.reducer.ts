@@ -1,7 +1,7 @@
 import { Cat } from "../domain";
 import { AuthInfo } from "../services/authinfo";
-import { State, ActionReducerMap } from "../../../node_modules/@ngrx/store";
 import { KillActions, KillActionType } from "./kill.actions";
+import { State } from ".";
 
 export interface KillState {
     user: AuthInfo
@@ -24,11 +24,7 @@ export function reducer(state = initalState, action: KillActions): KillState {
             const index = state.cats.findIndex((cat: Cat) => cat.id == action.catId);
             const cat = state.cats[index];
             cat.kills.push(action.kill);
-
-            return {
-                ...state,
-                state.cats[index] = cat
-            }
+            return state;
         default: {
             return state;
         }

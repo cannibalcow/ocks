@@ -14,11 +14,17 @@ import { RegisterKillAction } from '../../store/kill.actions';
 })
 export class DashboardContainerComponent implements OnInit {
   state: KillState;
+  cats: Observable<Cat[]>;
 
   constructor(private auth: AngularFireAuth, private authService: AuthService, private store: Store<KillState>) { }
 
   ngOnInit() {
     this.store.subscribe(p => this.state = p);
+    // this.cats = this.store.pipe(select('reducer.cats'));
+    this.cats = this.store.select(state => {
+      console.log(state)
+      return state.cats
+    });
   }
 
   derp() {

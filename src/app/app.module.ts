@@ -16,7 +16,7 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { StoreModule } from '../../node_modules/@ngrx/store';
-import * as reducer from './store/kill.reducer';
+import * as reducer from './store';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import * as reducer from './store/kill.reducer';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    StoreModule.forRoot(reducer)
+    StoreModule.forRoot(reducer.reducers)
   ],
   providers: [],
   bootstrap: [AppComponent]

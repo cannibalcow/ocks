@@ -6,7 +6,7 @@ export enum KillActionType {
 }
 
 export class RegisterKillAction implements Action {
-    readonly type = KillActionType.REGISTER_KILL;
+    readonly type: string = KillActionType.REGISTER_KILL;
 
     constructor(public catId: string, public kill: Kill) {
     }
