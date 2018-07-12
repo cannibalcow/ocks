@@ -1,7 +1,6 @@
 import { Cat } from "../domain";
 import { AuthInfo } from "../services/authinfo";
-import { KillActions, KillActionType } from "./kill.actions";
-import { State } from ".";
+import { DONE_LOGIN_USER, KillActions, LOGIN_USER, REGISTER_KILL, DONE_LOGOUT_USER } from "./kill.actions";
 
 export interface KillState {
     user: AuthInfo
@@ -9,7 +8,7 @@ export interface KillState {
 }
 
 const initalState: KillState = {
-    user: null,
+    user: new AuthInfo(null),
     cats: [
         {
             id: '123', name: 'Mo', birthday: new Date(), kills: []
@@ -20,13 +19,19 @@ const initalState: KillState = {
 export function reducer(state = initalState, action: KillActions): KillState {
     console.log(action);
     switch (action.type) {
-        case KillActionType.REGISTER_KILL:
-            const index = state.cats.findIndex((cat: Cat) => cat.id == action.catId);
-            const cat = state.cats[index];
-            cat.kills.push(action.kill);
+        case DONE_LOGIN_USER:
+            return {
+                ...state,
+                user: action.authInfo
+            }
+        case REGISTER_KILL:
             return state;
-        default: {
+        case DONE_LOGOUT_USER:
+            return {
+                ...state,
+                user: new AuthInfo(null)
+            }
+        default:
             return state;
-        }
     }
 }

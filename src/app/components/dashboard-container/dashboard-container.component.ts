@@ -1,33 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { AngularFireAuth } from '../../../../node_modules/angularfire2/auth';
-import { Observable, pipe } from '../../../../node_modules/rxjs';
-import { Cat } from '../../domain';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Subscription } from 'rxjs';
+import { RegisterKill } from '../../domain/register-kill';
 import { AuthService } from '../../services/auth.service';
+import { AuthInfo } from '../../services/authinfo';
+import { LoginUserAction, LogoutUserAction, RegisterKillAction } from '../../store/kill.actions';
 import { KillState } from '../../store/kill.reducer';
-import { RegisterKillAction } from '../../store/kill.actions';
 
 @Component({
   selector: 'app-dashboard-container',
   templateUrl: './dashboard-container.component.html',
   styleUrls: ['./dashboard-container.component.css']
 })
-export class DashboardContainerComponent implements OnInit {
-  state: KillState;
-  cats: Observable<Cat[]>;
+export class DashboardContainerComponent implements OnInit, OnDestroy {
 
+  user: AuthInfo;
+  userSub: Subscription = null;
   constructor(private auth: AngularFireAuth, private authService: AuthService, private store: Store<KillState>) { }
 
   ngOnInit() {
-    this.store.subscribe(p => this.state = p);
-    // this.cats = this.store.pipe(select('reducer.cats'));
-    this.cats = this.store.select(state => {
-      console.log(state)
-      return state.cats
-    });
+    this.userSub = this.store.select('appState', 'user').subscribe(auth => this.user = auth);
   }
 
-  derp() {
-    this.store.dispatch(new RegisterKillAction('123', { type: 'sotr', date: new Date() }));
+  ngOnDestroy(): void {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+  }
+
+  login() {
+    this.store.dispatch(new LoginUserAction());
+  }
+
+  logout() {
+    this.store.dispatch(new LogoutUserAction());
   }
 }

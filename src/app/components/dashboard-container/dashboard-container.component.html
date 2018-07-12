@@ -1,13 +1,10 @@
 <pre>
   penis
-  {{state | json}}
+  {{user  | json}}
 </pre>
-<pre>
-  cats
-  {{(cats | async)|json}}
-</pre>
-<a routerLink="/login">login</a>
-<button (click)="derp()">as</button>
+<img [src]="user?.photoURL" />
+<button class="btn btn-outline-primary" (click)="login()">login</button>
+<button class="btn btn-outline-primary" (click)="logout()">Logout</button>
 
 <div class="row">
   <div class="col-md-4">

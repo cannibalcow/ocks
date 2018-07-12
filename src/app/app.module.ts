@@ -17,6 +17,9 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { StoreModule } from '../../node_modules/@ngrx/store';
 import * as reducer from './store';
+import { EffectsModule } from '../../node_modules/@ngrx/effects';
+import { KillEffects } from './store/kill.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,12 @@ import * as reducer from './store';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    StoreModule.forRoot(reducer.reducers)
+    StoreModule.forRoot(reducer.reducers),
+    EffectsModule.forRoot([KillEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

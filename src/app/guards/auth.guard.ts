@@ -15,22 +15,25 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.authInfo$.pipe(
-      map(authInfo => {
-        console.log(authInfo);
-        return authInfo.isLoggedIn();
-      }),
-      take(1),
-      tap(allowed => {
-        console.log(allowed);
-        if (allowed) {
-          this.router.navigate(['/'])
-          return false;
-        } else {
-          console.log('do google login')
-          this.authService.doGoogleLogin();
-          return true;
-        }
-      }), );
+    // console.log('hippo', this.authService.getCurrentUser());
+    this.authService.doGoogleLogin().subscribe(p => this.router.navigate(['/']));
+    return true;
+    // return this.authService.authInfo$.pipe(
+    //   map(authInfo => {
+    //     console.log(authInfo);
+    //     return authInfo.isLoggedIn();
+    //   }),
+    //   take(1),
+    //   tap(allowed => {
+    //     console.log(allowed);
+    //     if (allowed) {
+    //       this.router.navigate(['/'])
+    //       return false;
+    //     } else {
+    //       console.log('do google login')
+    //       this.authService.doGoogleLogin();
+    //       return true;
+    //     }
+    //   }), );
   }
 }
