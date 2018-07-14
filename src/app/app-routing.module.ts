@@ -4,6 +4,7 @@ import { DashboardContainerComponent } from './components/dashboard-container/da
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorComponent } from './components/error/error.component';
+import { CatManagerComponent } from './components/cat-manager/cat-manager.component';
 const routes: Routes = [
   {
     path: '',
@@ -12,6 +13,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'catmanager',
+    component: CatManagerComponent,
     canActivate: [AuthGuard]
   },
   {

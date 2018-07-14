@@ -55,6 +55,14 @@ export class AuthService {
     }
   }
 
+  getUserId(): string {
+    if (this.isLoggedIn()) {
+      return this.afAuth.auth.currentUser.uid;
+    } else {
+      return null;
+    }
+  }
+
   logoutUser(): Observable<void> {
     return from(this.afAuth.auth.signOut());
   }

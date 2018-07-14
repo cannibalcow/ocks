@@ -11,7 +11,7 @@ const initalState: KillState = {
     user: new AuthInfo(null),
     cats: [
         {
-            id: '123', name: 'Mo', birthday: new Date(), kills: []
+            id: '123', name: 'martha', ownerId: '12331'
         }
     ]
 }

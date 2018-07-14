@@ -1,3 +1,15 @@
+<pre>
+  {{user|json}}
+</pre>
+<button (click)="login()">login</button>
+<button (click)="logout()">logout</button>
+<button (click)="addCat()">addCat</button>
+<a routerLink="catmanager">catmanger</a>
+
+<br/>
+<pre>
+  {{(cats | async) | json}}
+</pre>
 <div class="row">
   <div class="col-md-4">
     <app-cat-avatar></app-cat-avatar>

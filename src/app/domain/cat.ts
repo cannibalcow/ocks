@@ -1,6 +1,7 @@
 import { Kill } from "./kill";
 
-export class Cat {
-    constructor(public id: string, public name: string, public birthday: Date, public kills: Kill[]) {
-    }
+export interface Cat {
+    id: string,
+    ownerId: string,
+    name: string
 }

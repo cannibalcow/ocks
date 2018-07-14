@@ -15,11 +15,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
-import { StoreModule } from '../../node_modules/@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import * as reducer from './store';
-import { EffectsModule } from '../../node_modules/@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { KillEffects } from './store/kill.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CatManagerComponent } from './components/cat-manager/cat-manager.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     KillingStatsComponent,
     CatDescriptionComponent,
     LoginComponent,
-    ErrorComponent
+    ErrorComponent,
+    CatManagerComponent
   ],
   imports: [
     BrowserModule,
