@@ -15,7 +15,6 @@ export class KillEffects {
 
     @Effect()
     startLogin: Observable<KillActions> = this.actions.pipe(
-        tap(p => console.log('effect', p)),
         ofType(LOGIN_USER),
         mergeMap<Action, KillActions>(action =>
             this.authService.doGoogleLogin().pipe(
