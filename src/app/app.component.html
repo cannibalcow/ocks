@@ -5,7 +5,8 @@
         <span class="navbar-toggler-icon" (click)="toggleCollapse()"></span>
     </button>
     <div class="collapse navbar-collapse" [class.show]="show" id="navbarToggler">
-        <form class="form-inline my-2 my-lg-0">
+        <a routerLink="/catmanager">Cat Manager</a>
+        <!-- <form class="form-inline my-2 my-lg-0">
             <select class="form-control mr-sm-2">
                 <option disabled>Cat</option>
                 <option value="mo">Mo</option>
@@ -13,7 +14,7 @@
             </select>
             <input class="form-control mr-sm-2" type="text" placeholder="Enter Killed animal" aria-label="Register">
             <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Register kill</button>
-        </form>
+        </form> -->
     </div>
 </nav>
 <router-outlet></router-outlet>

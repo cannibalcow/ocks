@@ -12,9 +12,9 @@ import { map } from '../../../node_modules/rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-
-
   constructor(public afAuth: AngularFireAuth, public store: Store<KillState>) { }
+
+  authInfo: AuthInfo;
 
   doGoogleLogin(): Observable<AuthInfo> {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -24,12 +24,14 @@ export class AuthService {
     let oauthinfo: Observable<AuthInfo> = null;
 
     if (this.isLoggedIn()) {
-      return of(new AuthInfo(this.afAuth.auth.currentUser.uid, this.afAuth.auth.currentUser.displayName, this.afAuth.auth.currentUser.photoURL));
+      this.authInfo = new AuthInfo(this.afAuth.auth.currentUser.uid, this.afAuth.auth.currentUser.displayName, this.afAuth.auth.currentUser.photoURL)
+      return of(this.authInfo);
     } else {
       return from(this.afAuth.auth
         .signInWithPopup(provider)
         .then((ucred: firebase.auth.UserCredential) => {
-          return new AuthInfo(this.afAuth.auth.currentUser.uid, this.afAuth.auth.currentUser.displayName, this.afAuth.auth.currentUser.photoURL);
+          this.authInfo = new AuthInfo(this.afAuth.auth.currentUser.uid, this.afAuth.auth.currentUser.displayName, this.afAuth.auth.currentUser.photoURL);
+          return this.authInfo;
         })
         .catch((error) => {
           console.error('mighty error', error)
@@ -64,6 +66,7 @@ export class AuthService {
   }
 
   logoutUser(): Observable<void> {
+    this.authInfo = null;
     return from(this.afAuth.auth.signOut());
   }
 }

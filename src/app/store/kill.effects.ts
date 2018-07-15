@@ -23,7 +23,6 @@ export class KillEffects {
         )
     );
 
-
     @Effect()
     logoutUser: Observable<KillActions> = this.actions.pipe(
         ofType(LOGOUT_USER),
