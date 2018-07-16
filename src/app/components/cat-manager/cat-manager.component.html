@@ -4,18 +4,23 @@
     <p class="lead">Manage your cats here</p>
   </div>
 </div>
-
 <pre>
-  {{(cats | async) | json}}
+    {{form.name | json}}
+
 </pre>
 <div class="row">
   <div class="col-md">
-    <input class="form-control" type="text" />
+    <form class="needs-validation" [formGroup]="form" (ngSubmit)="addCat()">
+      <div class="form-group was-validated">
+        <input type="text" class="form-control" id="validationName" formControlName="name" placeholder="Enter cats name" />
+      </div>
+      <button type="submit" class="btn btn-primary float-right" [disabled]="form.invalid">Add cat!</button>
+    </form>
   </div>
   <div class="col-md">
     <ul class="list-group">
       <li class="list-group-item active">Cats</li>
-      <li *ngFor="let cat of (cats | async)" class="list-group-item">{{cat| json}}</li>
+      <li *ngFor="let cat of (cats | async)" class="list-group-item">{{cat.name}}</li>
     </ul>
   </div>
 </div>
