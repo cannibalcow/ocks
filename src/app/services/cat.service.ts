@@ -16,13 +16,17 @@ export class CatService {
     return this.db.collection<Cat>('cats', ref => ref.where('ownerId', '==', this.authService.getUserId()));
   }
 
-  addUserCat(name: string) {
+  addUserCat(cat: Cat): Promise<firebase.firestore.DocumentReference> {
+    cat.id = this.db.createId();
+    cat.ownerId = this.authService.getUserId();
+    console.log('presist', cat);
 
-    console.log(`user ${this.authService.getUserId()}`)
-    this.db.collection('cats').add({
-      id: this.db.createId(),
-      ownerId: this.authService.getUserId(),
-      name: name
-    }).then(c => console.log(c));
+    return this.db.collection<Cat>('cats').add(cat);
   }
+
+  deleteCat(id: string): Promise<void> {
+    const catRefs = this.db.collection<Cat>('cats');
+    return catRefs.doc(id).delete();
+  }
+
 }

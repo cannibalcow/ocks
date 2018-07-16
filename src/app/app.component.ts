@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(p => console.log('persistance', p));
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.store.dispatch(new DoneLoginAction(new AuthInfo(user.uid, user.displayName, user.photoURL)));

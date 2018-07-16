@@ -24,7 +24,7 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userSub = this.store.select('appState', 'user').subscribe(auth => this.user = auth);
-    this.cats = this.catService.fetchUserCats().valueChanges();
+    this.cats = this.store.select('appState', 'cats');
   }
 
   ngOnDestroy(): void {
@@ -39,10 +39,5 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
 
   logout() {
     this.store.dispatch(new LogoutUserAction());
-  }
-
-
-  addCat() {
-    this.catService.addUserCat('Mo');
   }
 }

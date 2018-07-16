@@ -4,7 +4,7 @@ import { Observable } from '../../../../node_modules/rxjs/internal/Observable';
 import { Cat } from '../../domain';
 import { KillState } from '../../store/kill.reducer';
 import { Store } from '../../../../node_modules/@ngrx/store';
-import { CreateCatAction } from '../../store/kill.actions';
+import { CreateCatAction, DeleteCatAction } from '../../store/kill.actions';
 
 @Component({
   selector: 'app-cat-manager',
@@ -30,7 +30,11 @@ export class CatManagerComponent implements OnInit {
 
   addCat() {
     if (!this.form.invalid) {
-      this.store.dispatch(new CreateCatAction({ name: this.form.get('name').value, id: null, ownerId: null }));
+      this.store.dispatch(new CreateCatAction({ name: this.form.controls['name'].value, id: null, ownerId: null }));
     }
+  }
+
+  deleteCat(id: string) {
+    this.store.dispatch(new DeleteCatAction(id));
   }
 }

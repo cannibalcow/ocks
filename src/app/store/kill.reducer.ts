@@ -1,6 +1,6 @@
 import { Cat } from "../domain";
 import { AuthInfo } from "../services/authinfo";
-import { DONE_LOGIN_USER, KillActions, LOGIN_USER, REGISTER_KILL, DONE_LOGOUT_USER, DONE_LOADING_USER_CATS, DONE_CREATING_CAT } from "./kill.actions";
+import { DONE_LOGIN_USER, KillActions, LOGIN_USER, REGISTER_KILL, DONE_LOGOUT_USER, DONE_LOADING_USER_CATS, DONE_CREATING_CAT, DONE_DELETE_CAT } from "./kill.actions";
 
 export interface KillState {
     user: AuthInfo
@@ -10,9 +10,6 @@ export interface KillState {
 const initalState: KillState = {
     user: new AuthInfo(null),
     cats: [
-        {
-            id: '123', name: 'martha', ownerId: '12331'
-        }
     ]
 }
 

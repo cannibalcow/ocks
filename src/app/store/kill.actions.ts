@@ -13,7 +13,8 @@ export const LOAD_USER_CATS = '[USER CATS] Load user cats';
 export const DONE_LOADING_USER_CATS = '[USER CATS] Done Loading User Cats';
 export const CREATE_CAT = '[CAT] Create Cat';
 export const DONE_CREATING_CAT = '[CAT] Done Creating cat';
-
+export const DELETE_CAT = '[CAT] Delete';
+export const DONE_DELETE_CAT = '[CAT] Done Delete Cat';
 
 export class RegisterKillAction implements Action {
     public readonly type = REGISTER_KILL;
@@ -82,6 +83,14 @@ export class DoneCreatingCatAction implements Action {
     }
 }
 
+export class DeleteCatAction implements Action {
+    public readonly type = DELETE_CAT;
+    id: string;
+    constructor(id: string) {
+        this.id = id;
+    }
+}
+
 export type KillActions =
     RegisterKillAction
     | LoginUserAction
@@ -92,4 +101,6 @@ export type KillActions =
     | LoadUserCats
     | DoneLoadingUserCats
     | CreateCatAction
-    | DoneCreatingCatAction;
+    | DoneCreatingCatAction
+    | DeleteCatAction
+    ;

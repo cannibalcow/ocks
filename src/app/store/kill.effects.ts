@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Observable, merge } from "rxjs";
-import { KillActions, LOGIN_USER, DoneLoginAction, LOGOUT_USER, DoneLogoutUserAction, CHECK_LOGGED_IN, LoadUserCats, LOAD_USER_CATS, DoneLoadingUserCats } from "./kill.actions";
-import { Effect, Actions, ofType } from '@ngrx/effects';
-import { mergeMap, first, map, take, tap, switchMap } from "../../../node_modules/rxjs/operators";
-import { AuthService } from "../services/auth.service";
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable, of, from } from "rxjs";
 import { Action } from "../../../node_modules/@ngrx/store";
-import { AuthInfo } from "../services/authinfo";
+import { map, mergeMap, switchMap, take } from "../../../node_modules/rxjs/operators";
+import { Cat } from "../domain";
+import { AuthService } from "../services/auth.service";
 import { CatService } from "../services/cat.service";
+import { CHECK_LOGGED_IN, CREATE_CAT, DoneCreatingCatAction, DoneLoadingUserCats, DoneLoginAction, DoneLogoutUserAction, KillActions, LOAD_USER_CATS, LOGIN_USER, LOGOUT_USER, CreateCatAction, DELETE_CAT, DeleteCatAction, LoadUserCats } from "./kill.actions";
 
 @Injectable()
 export class KillEffects {
@@ -40,7 +40,28 @@ export class KillEffects {
     loadUserCats: Observable<KillActions> = this.actions.pipe(
         ofType(LOAD_USER_CATS),
         switchMap(() => this.catService.fetchUserCats().valueChanges().pipe(
+            take(1),
             map(cats => new DoneLoadingUserCats(cats))
         ))
     );
+
+    @Effect()
+    createCat: Observable<KillActions> = this.actions.pipe(
+        ofType(CREATE_CAT),
+        switchMap((cat: CreateCatAction) => {
+            console.log('effect cat', cat);
+
+            return from(this.catService.addUserCat(cat.cat).then((doc: firebase.firestore.DocumentReference) => {
+                return new DoneCreatingCatAction(cat.cat)
+            }));
+        })
+    );
+
+    @Effect()
+    deleteCat: Observable<KillActions> = this.actions.pipe(
+        ofType(DELETE_CAT),
+        switchMap((action: DeleteCatAction) => {
+            return this.catService.deleteCat(action.id).then(() => new LoadUserCats());
+        })
+    )
 }
