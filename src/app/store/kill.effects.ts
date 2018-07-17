@@ -39,7 +39,7 @@ export class KillEffects {
     @Effect()
     loadUserCats: Observable<KillActions> = this.actions.pipe(
         ofType(LOAD_USER_CATS),
-        switchMap(() => this.catService.fetchUserCats().valueChanges().pipe(
+        switchMap(() => this.catService.fetchUserCats().pipe(
             take(1),
             map(cats => new DoneLoadingUserCats(cats))
         ))
@@ -52,6 +52,7 @@ export class KillEffects {
             console.log('effect cat', cat);
 
             return from(this.catService.addUserCat(cat.cat).then((doc: firebase.firestore.DocumentReference) => {
+                cat.cat.id = doc.id;
                 return new DoneCreatingCatAction(cat.cat)
             }));
         })

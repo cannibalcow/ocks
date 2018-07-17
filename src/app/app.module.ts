@@ -39,7 +39,7 @@ import { CatManagerComponent } from './components/cat-manager/cat-manager.compon
     ReactiveFormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     StoreModule.forRoot(reducer.reducers),
     EffectsModule.forRoot([KillEffects]),

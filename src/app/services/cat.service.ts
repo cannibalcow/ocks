@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { map } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from 'angularfire2/firestore';
+import { map, take } from 'rxjs/operators';
 import { Cat } from '../domain';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs/internal/Observable';
@@ -12,12 +12,20 @@ export class CatService {
 
   constructor(private db: AngularFirestore, private authService: AuthService) { }
 
-  fetchUserCats(): AngularFirestoreCollection<Cat> {
-    return this.db.collection<Cat>('cats', ref => ref.where('ownerId', '==', this.authService.getUserId()));
+  fetchUserCats(): Observable<Cat[]> {
+    return this.db.collection<Cat>('cats').snapshotChanges().pipe(
+      take(1),
+      map((p: DocumentChangeAction<Cat>[]) => {
+        return p.map(x => {
+          const cat = x.payload.doc.data() as Cat;
+          cat.id = x.payload.doc.id;
+          return cat;
+        })
+      })
+    );
   }
 
   addUserCat(cat: Cat): Promise<firebase.firestore.DocumentReference> {
-    cat.id = this.db.createId();
     cat.ownerId = this.authService.getUserId();
     console.log('presist', cat);
 
